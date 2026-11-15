@@ -25,5 +25,5 @@ iverilog -o sim tb.v dm_cache.v sa2_cache.v memory.v
 vvp sim
 
 ## Links
-- Report: (add report PDF in this repo)
+- Report: [Project_Report_IEEE.pdf](Project_Report_IEEE.pdf)
 - Demo video: (add link here)
