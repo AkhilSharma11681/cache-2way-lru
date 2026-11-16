@@ -1,0 +1,18 @@
+VCD info: dumpfile wave.vcd opened for output.
+
+Trace                  | Direct-Mapped (hit% / cycles) | 2-Way LRU (hit% / cycles)
+-----------------------------------------------------------------------------------
+Sequential             | hit=192 miss= 64   75.0%  cyc= 1471 | hit=192 miss= 64   75.0%  cyc= 1471
+                       | AMAT =  5.75 cycles/access        | AMAT =  5.75 cycles/access
+Repeated loop          | hit=240 miss= 16   93.8%  cyc=  943 | hit=240 miss= 16   93.8%  cyc=  943
+                       | AMAT =  3.68 cycles/access        | AMAT =  3.68 cycles/access
+2-addr conflict        | hit=  0 miss= 40    0.0%  cyc=  559 | hit= 38 miss=  2   95.0%  cyc=  141
+                       | AMAT = 13.97 cycles/access        | AMAT =  3.52 cycles/access
+3-addr LRU test        | hit=  0 miss= 40    0.0%  cyc=  559 | hit= 19 miss= 21   47.5%  cyc=  350
+                       | AMAT = 13.97 cycles/access        | AMAT =  8.75 cycles/access
+Random                 | hit=214 miss=286   42.8%  cyc= 4645 | hit=221 miss=279   44.2%  cyc= 4568
+                       | AMAT =  9.29 cycles/access        | AMAT =  9.14 cycles/access
+Write/Read test (DM   ): PASS
+Write/Read test (2-way): PASS
+
+tb.v:121: $finish called at 158280000 (1ps)
