@@ -19,6 +19,14 @@ module memory #(parameter LAT = 10) (
     integer i;
     initial for (i = 0; i < 4096; i = i + 1) mem[i] = i;
 
+`ifndef SYNTHESIS
+    // cnt is 8 bits wide, so LAT must be in 1..256
+    initial if (LAT < 1 || LAT > 256) begin
+        $display("ERROR: memory LAT=%0d out of range (1..256)", LAT);
+        $finish;
+    end
+`endif
+
     always @(posedge clk) begin
         if (rst || !req) begin
             cnt <= 0; ready <= 0;
