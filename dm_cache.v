@@ -2,6 +2,7 @@
 // 1 KB total: 64 lines x 16-byte blocks (4 words per block)
 // Address split: tag = [31:10] (22 bits), index = [9:4] (6 bits),
 //                word = [3:2] (2 bits), byte = [1:0]
+// Write policy: write-through, no-write-allocate
 module dm_cache (
     input clk, rst,
     input cpu_req, cpu_we,
@@ -36,6 +37,7 @@ module dm_cache (
     assign mem_wdata = cpu_wdata;
     assign cpu_done  = (state == DONE);
 
+    reg [127:0] tmp;
     integer i;
     always @(posedge clk) begin
         if (rst) begin
@@ -47,7 +49,13 @@ module dm_cache (
                 if (hit) hits <= hits + 1;
                 else     misses <= misses + 1;
 
-                begin
+                if (cpu_we) begin
+                    // update the cached copy only on a hit, always write memory
+                    if (hit) begin
+                        tmp = blk; tmp[w*32 +: 32] = cpu_wdata; datam[idx] <= tmp;
+                    end
+                    state <= WTHRU;
+                end else begin
                     if (hit) begin cpu_rdata <= word; state <= DONE; end
                     else state <= REFILL;
                 end
@@ -59,6 +67,7 @@ module dm_cache (
                 cpu_rdata  <= mem_rblock[w*32 +: 32];
                 state <= DONE;
             end
+            WTHRU: if (mem_ready) state <= DONE;
             DONE: state <= IDLE;
             default: state <= IDLE;
         endcase
