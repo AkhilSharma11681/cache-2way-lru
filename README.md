@@ -26,4 +26,5 @@ vvp sim
 
 ## Links
 -  Report: [Project Report IEEE.pdf](Project%20Report%20IEEE.pdf)
-- Demo video: (add link here)
+- Demo video: https://drive.google.com/file/d/14VPOMg-hgQg2BR5IkKwQtdCi_lR4F0JE/view?usp=sharing
+
