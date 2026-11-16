@@ -49,5 +49,5 @@ Or with make:
 
 ## Links
 -  Report: [Project Report IEEE.pdf](Project%20Report%20IEEE.pdf)
-- Demo video: https://drive.google.com/file/d/14VPOMg-hgQg2BR5IkKwQtdCi_lR4F0JE/view?usp=sharing
+- Demo video: https://drive.google.com/file/d/1WiyySaJmpNvHJb0E4V2Q41FNftr-zPJD/view?usp=sharing
 
