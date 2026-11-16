@@ -17,12 +17,35 @@ On a two-address conflict trace, the direct-mapped cache hits 0% of the time
 - dm_cache.v : direct-mapped baseline
 - memory.v : main memory model
 - tb.v : trace-driven testbench
+- tb_memory.v, tb_dm_cache.v : unit testbenches for memory and direct-mapped cache
 - results.txt, wave.vcd : simulation output
 - sa2_synth.txt, dm_synth.txt : Yosys synthesis reports
+- Makefile : build and run targets
+
+## Main memory model (memory.v)
+- 16 KB, 4096 32-bit words; word i is initialised to the value i.
+- Every request (block read or word write) takes `LAT` cycles (default 10),
+  then `ready` pulses high for one cycle.
+- Reads return the whole 16-byte block containing the address.
+- `LAT` must be between 1 and 256 (checked in simulation).
+
+## Direct-mapped cache (dm_cache.v)
+- 1 KB: 64 lines of 16-byte blocks (4 words each).
+- Address split: tag = [31:10], index = [9:4], word = [3:2], byte = [1:0].
+- FSM: IDLE -> LOOKUP -> (REFILL | WTHRU) -> DONE -> IDLE.
+- Read miss: fetch the block from memory, fill the line, return the word.
+- Write policy: write-through, no-write-allocate. A write hit updates the
+  cached word and memory; a write miss only updates memory.
 
 ## How to run
 iverilog -o sim tb.v dm_cache.v sa2_cache.v memory.v
 vvp sim
+
+Or with make:
+
+    make sim     # full trace comparison
+    make test    # unit tests for memory.v and dm_cache.v
+    make clean
 
 ## Links
 -  Report: [Project Report IEEE.pdf](Project%20Report%20IEEE.pdf)
